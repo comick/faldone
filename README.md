@@ -45,6 +45,30 @@ Search query can be anything accepted by [SQLite fts4](https://www.sqlite.org/ft
 - labels
 - text_data
 
+As an example, you could search through documents title only with:
+
+```sh
+$ faldone.py search "title:bolletta"
+$ faldone.py search "labels:steuer"
+```
+
+## Opening a document
+
+Once you get a promising result, the actual document can be opened.
+
+```sh
+$ faldone.py open <id>
+```
+
+where `id` is the number in front of a given result. That will use `xdg-open` to open the file content temporarily copied to a temp folder.
+
+## Future developement
+
+I plan to add support for basic OCR on both images and PDF scans using tesseract.
+
+May make sense to move the base schema to the same used by [sqlar](https://www.sqlite.org/sqlar/doc/trunk/README.md), should it become ubiquitous.
+
+Could use `bm25` ranking function instead.
 
 ## License
 
