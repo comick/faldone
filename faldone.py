@@ -8,8 +8,11 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-
+import mimetypes
 import magic
+import pyocr
+import pyocr.builders
+from PIL import Image
 
 APPLICATION_ID = '0x66616c64'
 
@@ -69,6 +72,18 @@ def put(conn, cursor, args):
 
     if mime_type == 'application/pdf':
         doc_text = subprocess.run(['pdftotext', doc.name, '-'], stdout=subprocess.PIPE).stdout
+    elif mime_type.startswith('image/'):
+        tools = pyocr.get_available_tools()
+        if (len(tools) == 0):
+            print('OCR tool not found, cannot put image.')
+            return 1
+        tool = tools[0]
+        print('Using `{}` for OCR'.format(tool.get_name()))
+        doc_text = tool.image_to_string(
+                Image.open(doc),
+                builder=pyocr.builders.TextBuilder()
+        )
+        print(doc_text)
     elif mime_type.startswith('text/'):
         doc_text = doc_blob
     else:
@@ -131,7 +146,7 @@ def openX(conn, cursor, args):
     if doc == None:
         print('Document does not exist')
         return 1
-    ext = '.pdf' if doc[1] == 'application/pdf' else '.txt'
+    ext = mimetypes.guess_extension(doc[1])
     with tempfile.NamedTemporaryFile(suffix=ext, delete=False) as output_file:
         output_file.write(doc[0])
     subprocess.run(['xdg-open', output_file.name])
