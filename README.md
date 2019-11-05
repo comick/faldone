@@ -1,6 +1,6 @@
-# Faldone: a personal documents storage and search tool
+# Faldone is a personal documents storage and search tool
 
-Faldone wants to be a reasonable alternative to classic paper folders (faldoni).
+Faldone wants to be a reasonable alternative to hardware ring binder ([faldone](https://en.wiktionary.org/wiki/faldone)).
 It comes as a command line Python 3 tool, backed by SQLite for storage and indexing.
 
 Faldone enables the following workflow:
