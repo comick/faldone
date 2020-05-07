@@ -62,7 +62,7 @@ $ faldone.py open <id>
 
 where `id` is the number in front of a given result. That will use `xdg-open` to open the file content temporarily copied to a temp folder.
 
-## Future developement
+## Future development
 
 I plan to add support for basic OCR on both images and PDF scans using tesseract.
 

@@ -40,10 +40,10 @@ PRAGMA application_id = {};
 class Faldone:
 
     def __init__(self, path):
-        existed = not os.path.exists(path)
+        existed = os.path.exists(path)
         self.conn = sqlite3.connect(path)
         self.cursor = self.conn.cursor()
-        if existed:
+        if not existed:
             print('Creating faldone at \'{}\''.format(path))
             for s in init_sql:
                 self.cursor.execute(s)
